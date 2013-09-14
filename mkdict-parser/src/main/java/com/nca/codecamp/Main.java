@@ -1,20 +1,16 @@
-package com.netcetera.codecamp;
+package com.nca.codecamp;
 
-import com.netcetera.codecamp.parser.db.Initializer;
-import com.netcetera.codecamp.parser.itcommk.ITComMkParser;
+import com.nca.codecamp.parser.db.Initializer;
+import com.nca.codecamp.parser.itcommk.ITComMkParser;
 
-
-/**
- * Hello world!
- */
 public class Main {
 
   public static void main(String[] args) throws ClassNotFoundException {
     new Initializer().initialize();
-    
+
     ITComMkParser.parse();
-    
+
     System.out.println("Finished");
   }
-  
+
 }
