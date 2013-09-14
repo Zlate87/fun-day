@@ -23,7 +23,7 @@ public class Initializer {
     System.out.println("database initialization finished");
   }
 
-  private void initialize() throws ClassNotFoundException {
+  public void initialize() throws ClassNotFoundException {
 
     Class.forName("org.sqlite.JDBC");
     
@@ -33,9 +33,9 @@ public class Initializer {
       Statement statement = connection.createStatement();
       statement.setQueryTimeout(10); 
 
-      statement.executeUpdate("drop table if exists words");
+      // statement.executeUpdate("drop table if exists words");
       // statement.executeUpdate("create table if not exists words (word text) ");
-      statement.executeUpdate("create table words (word text) ");
+      statement.executeUpdate("create table if not exists words (word text) ");
       
     } catch (SQLException e) {
       e.printStackTrace(System.err);
