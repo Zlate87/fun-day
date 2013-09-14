@@ -21,6 +21,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public final class WebClientUtils {
   
+  public static final String DELIMITERS = "\".;:' ()/\\-+=[]`„“*$%^&@!?,<>{}\t\n\r";
+  
   @SuppressWarnings("unchecked")
   public static <T extends HtmlElement> List<T> getByXPath(final String url, final String selector) {
     final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_17);
@@ -28,6 +30,7 @@ public final class WebClientUtils {
       final HtmlPage page = webClient.getPage(new URL(url));
       return (List<T>) page.getByXPath(selector);
     } catch (Exception e) {
+      e.printStackTrace();
       return Collections.emptyList();
     }
   }
