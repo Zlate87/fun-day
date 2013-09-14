@@ -16,4 +16,13 @@ public class DatabaseUtilities {
     }
   }
 
+  public static void initializeJdbcDriver() {
+    try {
+      Class.forName("org.sqlite.JDBC");
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace(System.err);
+      throw new RuntimeException(e);
+    }
+  }
+
 }

@@ -16,7 +16,7 @@ public class Initializer {
 
   public void initialize() throws ClassNotFoundException {
 
-    Class.forName("org.sqlite.JDBC");
+    DatabaseUtilities.initializeJdbcDriver();
 
     Connection connection = null;
     try {

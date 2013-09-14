@@ -12,12 +12,7 @@ public class DatabaseContext {
   static final String CONNECTION_STRING = "jdbc:sqlite::resource:words.db";
 
   static {
-    try {
-      Class.forName("org.sqlite.JDBC");
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace(System.err);
-      throw new RuntimeException(e);
-    }
+    DatabaseUtilities.initializeJdbcDriver();
   }
 
   public static void batchInsert(final Collection<String> words) {
@@ -28,6 +23,7 @@ public class DatabaseContext {
     Connection connection = null;
     try {
       connection = DriverManager.getConnection(CONNECTION_STRING);
+      connection.setAutoCommit(false);
 
       final PreparedStatement statement =
           connection.prepareStatement("insert into words values (?)");
@@ -38,6 +34,8 @@ public class DatabaseContext {
 
       statement.executeBatch();
       statement.close();
+
+      connection.commit();
 
     } catch (SQLException e) {
       e.printStackTrace(System.err);

@@ -17,7 +17,7 @@ public class ContentFilter {
   }
 
   public static boolean isAcceptable(final String item) {
-    return StringUtils.isAlpha(item);
+    return StringUtils.isAlpha(item) && !StringUtils.isAsciiPrintable(item);
   }
 
 }
