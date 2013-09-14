@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.nca.codecamp.parser.ContentFilter;
 import com.nca.codecamp.parser.WebClientUtils;
 
 import static com.nca.codecamp.parser.WebClientUtils.DELIMITERS;
@@ -13,8 +14,7 @@ import static com.nca.codecamp.parser.WebClientUtils.DELIMITERS;
 
 class SubTopic extends Topic {
 
-  private static final String CONTENT_SELECTOR =
-      "//div[@class='messageContent']//blockquote";
+  private static final String CONTENT_SELECTOR = "//div[@class='messageContent']//blockquote";
 
   public SubTopic(final String topicUrl, final String title) {
     super(topicUrl, title);
@@ -34,7 +34,10 @@ class SubTopic extends Topic {
     final List<String> content = new ArrayList<>();
     final StringTokenizer tokenizer = new StringTokenizer(contents, DELIMITERS);
     while (tokenizer.hasMoreElements()) {
-      content.add(tokenizer.nextToken());
+      final String word = tokenizer.nextToken();
+      if (ContentFilter.isAcceptable(word)) {
+        content.add(word);
+      }
     }
 
     return content;
