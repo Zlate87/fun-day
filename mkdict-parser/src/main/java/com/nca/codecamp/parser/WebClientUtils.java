@@ -17,6 +17,7 @@ public final class WebClientUtils {
   @SuppressWarnings("unchecked")
   public static <T extends HtmlElement> List<T> getByXPath(final String url, final String selector) {
     final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_17);
+    webClient.getOptions().setJavaScriptEnabled(false);
     try {
       final HtmlPage page = webClient.getPage(new URL(url));
       return (List<T>) page.getByXPath(selector);

@@ -14,7 +14,7 @@ import static com.nca.codecamp.parser.WebClientUtils.DELIMITERS;
 class SubTopic extends Topic {
 
   private static final String CONTENT_SELECTOR =
-      "//div[@class='messageContent']//blockquote[contains(@class,'messageText')]";
+      "//div[@class='messageContent']//blockquote";
 
   public SubTopic(final String topicUrl, final String title) {
     super(topicUrl, title);
