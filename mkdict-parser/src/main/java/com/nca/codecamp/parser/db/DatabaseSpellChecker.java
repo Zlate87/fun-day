@@ -47,9 +47,6 @@ public class DatabaseSpellChecker {
           + "select wo.word, wo.occurence as occurences from word_occurence wo "
           + "where wo.word in (select * from spellcheck)");
 
-
-      statement.executeUpdate("vacuum;"); // reduce extra table space
-
       connection.commit();
     } catch (SQLException e) {
       e.printStackTrace(System.err);
