@@ -23,7 +23,7 @@ public class XmlExporter {
     final FileOutputStream outputStream = FileUtils.openOutputStream(new File("wordlist.xml"));
     final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, Charset.forName("UTF-8")));
 
-    writer.write("<wordlist>\n");
+    writer.write("<wordlist locale=\"mk\" description=\"Macedonian\" date=\"1340038727\" version=\"16\">\n");
     final Collection<WordFreqEntity> wordFreqEntities = DatabaseContext.getAllWordFreqEntities();
     for (final WordFreqEntity entity : wordFreqEntities) {
       writer.write("  <w f=\"" + entity.getFreq() + "\">" + entity.getWord() + "</w>\n");
