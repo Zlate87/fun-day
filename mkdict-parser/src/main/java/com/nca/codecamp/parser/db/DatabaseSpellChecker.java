@@ -30,7 +30,7 @@ public class DatabaseSpellChecker {
 
       final Statement statement = connection.createStatement();
       statement.executeUpdate("drop table if exists spellcheck ");
-      statement.executeUpdate("create table if not exists spellcheck (word text)");
+      statement.executeUpdate("create table spellcheck (word text)");
 
       final PreparedStatement preparedStatement = connection.prepareStatement("insert into spellcheck values (?)");
       for (String line : lines) {
@@ -41,12 +41,14 @@ public class DatabaseSpellChecker {
       preparedStatement.executeBatch();
 
       statement.executeUpdate("drop table if exists final_words");
-      statement.executeUpdate("create table if not exists final_words (word text, occurences number)");
+      statement.executeUpdate("create table final_words (word text, occurences number)");
 
       statement.executeUpdate("insert into final_words "
           + "select wo.word, wo.occurence as occurences from word_occurence wo "
           + "where wo.word in (select * from spellcheck)");
 
+
+      statement.executeUpdate("vacuum;"); // reduce extra table space
 
       connection.commit();
     } catch (SQLException e) {
