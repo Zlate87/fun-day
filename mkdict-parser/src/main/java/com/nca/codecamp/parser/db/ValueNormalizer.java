@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 public class ValueNormalizer {
 
-  private static final int RANGE_MAX = 255;
+  private static final int RANGE_MAX = 253;
 
   public static final void main(String[] main) {
     DatabaseUtilities.initializeJdbcDriver();

@@ -3,7 +3,10 @@ package com.nca.codecamp.parser.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -42,6 +45,47 @@ public class DatabaseContext {
     } finally {
       DatabaseUtilities.closeConnection(connection);
     }
+  }
+
+  public static Collection<WordFreqEntity> getAllWordFreqEntities() {
+    final Collection<WordFreqEntity> result = new ArrayList<>();
+    Connection connection = null;
+    try {
+      connection = DriverManager.getConnection(CONNECTION_STRING);
+      final Statement statement = connection.createStatement();
+      final ResultSet resultSet = statement.executeQuery("select word, freq from word_freq order by freq desc");
+      while (resultSet.next()) {
+        final String word = resultSet.getString("word");
+        final int freq = resultSet.getInt("freq");
+        result.add(new WordFreqEntity(word, freq));
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace(System.err);
+    } finally {
+      DatabaseUtilities.closeConnection(connection);
+    }
+    return result;
+  }
+
+  public static final class WordFreqEntity {
+
+    private final String word;
+    private final int freq;
+
+    private WordFreqEntity(final String word, final int freq) {
+      this.word = word;
+      this.freq = freq;
+    }
+
+    public String getWord() {
+      return word;
+    }
+
+    public int getFreq() {
+      return freq;
+    }
+
   }
 
 }
